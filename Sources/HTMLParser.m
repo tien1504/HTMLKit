@@ -421,7 +421,8 @@
 {
 	HTMLElement *element = [[HTMLElement alloc] initWithTagName:token.tagName
 													  namespace:htmlNamespace
-													 attributes:token.attributes];
+                                                     attributes:token.attributes
+                                                    selfClosing:token.isSelfClosing];
 	return element;
 }
 

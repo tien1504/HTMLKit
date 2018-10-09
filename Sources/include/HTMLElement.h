@@ -34,6 +34,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, readonly) NSString *tagName;
 
 /**
+ Is the element self-closing
+ */
+@property (nonatomic, getter = isSelfClosing) BOOL selfClosing;
+
+/**
  The elemen's id attribute value. Empty string if the element has no id attribute.
  */
 @property (nonatomic, copy)	NSString *elementId;
@@ -86,6 +91,11 @@ NS_ASSUME_NONNULL_BEGIN
  @return A new HTML element.
  */
 - (instancetype)initWithTagName:(NSString *)tagName namespace:(HTMLNamespace)htmlNamespace attributes:(nullable NSDictionary<NSString *, NSString *> *)attributes;
+    
+/**
+ Support Self-closing node
+ */
+- (instancetype)initWithTagName:(NSString *)tagName namespace:(HTMLNamespace)htmlNamespace attributes:(nullable NSDictionary<NSString *, NSString *> *)attributes selfClosing: (BOOL) selfClosing;
 
 /**
  Checks whether this element has an attribute with the given name.

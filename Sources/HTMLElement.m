@@ -42,17 +42,21 @@
 
 - (instancetype)initWithTagName:(NSString *)tagName namespace:(HTMLNamespace)htmlNamespace attributes:(NSDictionary *)attributes
 {
-	self = [super initWithName:tagName type:HTMLNodeElement];
-	if (self) {
-		_tagName = [tagName copy];
-		_attributes = nil;
-		if (attributes != nil) {
-			_attributes = [HTMLOrderedDictionary new];
-			[_attributes addEntriesFromDictionary:attributes];
-		}
-		_htmlNamespace = htmlNamespace;
-	}
-	return self;
+    return [self initWithTagName:tagName namespace:htmlNamespace attributes:attributes selfClosing:NO];
+}
+- (instancetype)initWithTagName:(NSString *)tagName namespace:(HTMLNamespace)htmlNamespace attributes:(nullable NSDictionary<NSString *, NSString *> *)attributes selfClosing: (BOOL) selfClosing{
+    self = [super initWithName:tagName type:HTMLNodeElement];
+    if (self) {
+        _tagName = [tagName copy];
+        _attributes = nil;
+        _selfClosing = selfClosing;
+        if (attributes != nil) {
+            _attributes = [HTMLOrderedDictionary new];
+            [_attributes addEntriesFromDictionary:attributes];
+        }
+        _htmlNamespace = htmlNamespace;
+    }
+    return self;
 }
 
 #pragma mark - Special Attributes
@@ -164,7 +168,10 @@
 
 		[result appendFormat:@" %@=\"%@\"", key, escaped];
 	}];
-
+    if (_selfClosing){
+        [result appendString:@"/>"];
+        return result;
+    }
 	[result appendString:@">"];
 
 	if ([self.tagName isEqualToAny:@"area", @"base", @"basefont", @"bgsound", @"br", @"col", @"embed",

@@ -165,3 +165,9 @@ do {
 } catch let error {
 	print(error)
 }
+let emptyHtml = """
+<p><br/></p>
+"""
+let parser = HTMLParser(string: emptyHtml)
+let doc = parser.parseDocument()
+print(doc.innerHTML)
